@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import type { HTMLAttributes } from "react";
+import type { HTMLAttributes, ImgHTMLAttributes } from "react";
 import { getClaseBySlug, getClases } from "@/lib/clases";
+import { BASE_PATH } from "@/lib/basePath";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
@@ -86,6 +87,14 @@ export default async function ClasePage({
                 {...(props as HTMLAttributes<HTMLOListElement>)}
               />
             ),
+            img: (props) => {
+              const { src, alt, ...rest } = props as ImgHTMLAttributes<HTMLImageElement>;
+              const resolved =
+                typeof src === "string" && src.startsWith("/")
+                  ? `${BASE_PATH}${src}`
+                  : src;
+              return <img src={resolved} alt={alt ?? ""} {...rest} />;
+            },
           }}
         >
           {clase.content}
