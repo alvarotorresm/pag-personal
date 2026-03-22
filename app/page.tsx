@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getClases, getTemas } from "@/lib/clases";
 import SearchBar from "@/app/components/SearchBar";
 
@@ -64,7 +65,7 @@ export default async function Home() {
             </p>
           ) : (
             temas.map((tema) => (
-              <a
+              <Link
                 key={tema.slug}
                 href={`/temas/${tema.slug}`}
                 className="group flex flex-col rounded-lg border border-stone-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-stone-800 dark:bg-stone-900"
@@ -87,7 +88,7 @@ export default async function Home() {
                 <span className="mt-3 inline-flex items-center text-sm font-medium text-amber-600 group-hover:text-amber-700 dark:text-amber-500 dark:group-hover:text-amber-400">
                   Ver clases &rarr;
                 </span>
-              </a>
+              </Link>
             ))
           )}
         </div>
