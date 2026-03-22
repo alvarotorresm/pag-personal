@@ -3,9 +3,12 @@ import { notFound } from "next/navigation";
 import type { HTMLAttributes, ImgHTMLAttributes } from "react";
 import { getClaseBySlug, getClases } from "@/lib/clases";
 import { BASE_PATH } from "@/lib/basePath";
+import { trackClaseView } from "@/app/actions/pageviews";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
+
+export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
   const clases = await getClases();
@@ -31,6 +34,8 @@ export default async function ClasePage({
   const clase = await getClaseBySlug(slug);
 
   if (!clase) notFound();
+
+  const visitas = await trackClaseView(slug);
 
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-stone-950">
@@ -67,6 +72,11 @@ export default async function ClasePage({
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-stone-900 dark:text-stone-50 sm:text-4xl">
             {clase.title}
           </h1>
+          {visitas > 0 && (
+            <p className="mt-1 text-sm text-stone-400 dark:text-stone-500">
+              {visitas} {visitas === 1 ? "visita" : "visitas"}
+            </p>
+          )}
         </header>
 
         {/* Contenido Markdown con tipografía para lectura larga */}

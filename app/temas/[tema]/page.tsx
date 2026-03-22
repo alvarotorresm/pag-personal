@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getClasesByTema, getTemas } from "@/lib/clases";
+import { trackTemaView } from "@/app/actions/pageviews";
+
+export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
   const temas = await getTemas();
@@ -40,6 +43,7 @@ export default async function TemaPage({
 
   if (clases.length === 0) notFound();
 
+  const visitas = await trackTemaView(tema);
   const nombre = slugToNombre(tema);
 
   return (
@@ -77,6 +81,11 @@ export default async function TemaPage({
           <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">
             {clases.length} {clases.length === 1 ? "clase" : "clases"}
           </p>
+          {visitas > 0 && (
+            <p className="mt-1 text-sm text-stone-400 dark:text-stone-500">
+              {visitas} {visitas === 1 ? "visita" : "visitas"}
+            </p>
+          )}
         </header>
 
         {/* Grid de clases */}
