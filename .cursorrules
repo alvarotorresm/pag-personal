@@ -1,0 +1,7 @@
+Usa Next.js version >= 14 con App Router, Tailwind CSS para los estilos, y crea componentes funcionales limpios. 
+El contenido del blog vendrá de archivos Markdown locales
+
+Cuando hagas cambios significativos en la estructura del proyecto, nuevos componentes, rutas o funcionalidades, actualiza también el README.md para reflejar:
+- Nueva estructura de carpetas
+- Comandos relevantes
+- Cómo agregar nuevo contenido (ej: nuevas clases/temas)
